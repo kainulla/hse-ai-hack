@@ -67,12 +67,11 @@ def generate_alerts(org_id: str | None = None) -> list[dict]:
                     "date": last_date.strftime("%Y-%m-%d"),
                 })
 
-        # Yellow alert: trend > 15% vs same period last year
+        # Yellow / Green alert: trend comparison vs last year
         current_year = last_date.year
         current_half = org_violations[org_violations["date"].dt.year == current_year]
         previous_half = org_violations[org_violations["date"].dt.year == current_year - 1]
-        if len(previous_half) > 0:
-            # Normalize to same period length
+        if len(previous_half) > 0 and len(current_half) > 0:
             days_current = (current_half["date"].max() - current_half["date"].min()).days + 1
             days_previous = (previous_half["date"].max() - previous_half["date"].min()).days + 1
             if days_previous > 0 and days_current > 0:
@@ -90,19 +89,16 @@ def generate_alerts(org_id: str | None = None) -> list[dict]:
                             "trend_pct": round(trend_pct * 100, 1),
                             "date": last_date.strftime("%Y-%m-%d"),
                         })
-
-        # Green alert: improvement (negative trend)
-        if len(previous_half) > 0 and days_previous > 0 and days_current > 0:
-            if rate_previous > 0 and trend_pct < -0.1:
-                alerts.append({
-                    "level": "green",
-                    "level_label": "Улучшение",
-                    "org_id": oid,
-                    "org_name": org_name,
-                    "message": f"Показатели улучшились на {abs(trend_pct)*100:.0f}% по сравнению с прошлым годом",
-                    "trend_pct": round(trend_pct * 100, 1),
-                    "date": last_date.strftime("%Y-%m-%d"),
-                })
+                    elif trend_pct < -0.1:
+                        alerts.append({
+                            "level": "green",
+                            "level_label": "Улучшение",
+                            "org_id": oid,
+                            "org_name": org_name,
+                            "message": f"Показатели улучшились на {abs(trend_pct)*100:.0f}% по сравнению с прошлым годом",
+                            "trend_pct": round(trend_pct * 100, 1),
+                            "date": last_date.strftime("%Y-%m-%d"),
+                        })
 
     # Sort by severity: red first, then orange, yellow, green
     level_order = {"red": 0, "orange": 1, "yellow": 2, "green": 3}
