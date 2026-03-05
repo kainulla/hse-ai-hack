@@ -1,0 +1,50 @@
+[
+  {
+    "id": "org_01",
+    "name": "ТОО «КазМунайСервис»",
+    "type": "contractor",
+    "risk_base": 0.7
+  },
+  {
+    "id": "org_02",
+    "name": "АО «ПетроКазахстан»",
+    "type": "operator",
+    "risk_base": 0.4
+  },
+  {
+    "id": "org_03",
+    "name": "ТОО «ДриллТех»",
+    "type": "contractor",
+    "risk_base": 0.65
+  },
+  {
+    "id": "org_04",
+    "name": "ТОО «СтройМонтажСервис»",
+    "type": "contractor",
+    "risk_base": 0.8
+  },
+  {
+    "id": "org_05",
+    "name": "АО «ТенгизШеврОйл»",
+    "type": "operator",
+    "risk_base": 0.35
+  },
+  {
+    "id": "org_06",
+    "name": "ТОО «КаспийЭнерджи»",
+    "type": "contractor",
+    "risk_base": 0.6
+  },
+  {
+    "id": "org_07",
+    "name": "АО «СНПС-Актобемунайгаз»",
+    "type": "operator",
+    "risk_base": 0.45
+  },
+  {
+    "id": "org_08",
+    "name": "ТОО «НефтеСпецМонтаж»",
+    "type": "contractor",
+    "risk_base": 0.75
+  }
+]

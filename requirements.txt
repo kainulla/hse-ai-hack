@@ -1,0 +1,11 @@
+fastapi==0.115.0
+uvicorn==0.30.0
+streamlit==1.38.0
+pandas==2.2.2
+numpy==1.26.4
+scikit-learn==1.5.1
+prophet==1.1.5
+plotly==5.24.0
+python-dotenv==1.0.1
+openai==1.50.0
+pydantic==2.9.0
