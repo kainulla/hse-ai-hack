@@ -1,15 +1,20 @@
-"""Prophet forecasting and backtesting for incident prediction."""
+"""Time series forecasting and backtesting for incident prediction.
+
+Uses statsmodels ExponentialSmoothing (Holt-Winters) for reliable deployment
+on Streamlit Cloud without heavy dependencies like Prophet/cmdstan.
+"""
 
 import warnings
 
 import pandas as pd
 import numpy as np
+from statsmodels.tsa.holtwinters import ExponentialSmoothing
 
 warnings.filterwarnings("ignore", category=FutureWarning)
 
 
-def prepare_prophet_data(df: pd.DataFrame) -> pd.DataFrame:
-    """Prepare monthly incident data for Prophet."""
+def prepare_ts_data(df: pd.DataFrame) -> pd.DataFrame:
+    """Prepare monthly incident data for forecasting."""
     df = df.copy()
     df["date"] = pd.to_datetime(df["date"])
     monthly = df.groupby(df["date"].dt.to_period("M")).size().reset_index(name="y")
@@ -18,75 +23,82 @@ def prepare_prophet_data(df: pd.DataFrame) -> pd.DataFrame:
 
 
 def forecast(df: pd.DataFrame, horizon_months: int = 12) -> pd.DataFrame:
-    """Run Prophet forecast on incident data.
+    """Run Holt-Winters forecast on incident data.
 
     Returns DataFrame with ds, yhat, yhat_lower, yhat_upper.
     """
-    from prophet import Prophet
+    ts_df = prepare_ts_data(df)
 
-    prophet_df = prepare_prophet_data(df)
+    y = ts_df.set_index("ds")["y"].asfreq("MS").fillna(0)
 
-    model = Prophet(
-        yearly_seasonality=True,
-        weekly_seasonality=False,
-        daily_seasonality=False,
-        interval_width=0.8,
-        seasonality_mode="multiplicative",
-        changepoint_prior_scale=0.1,
-    )
-    model.fit(prophet_df)
+    # Holt-Winters with additive trend and multiplicative seasonality
+    model = ExponentialSmoothing(
+        y,
+        trend="add",
+        seasonal="mul",
+        seasonal_periods=12,
+        initialization_method="estimated",
+    ).fit(optimized=True)
 
-    future = model.make_future_dataframe(periods=horizon_months, freq="MS")
-    prediction = model.predict(future)
+    # Forecast
+    pred = model.forecast(horizon_months)
 
-    result = prediction[["ds", "yhat", "yhat_lower", "yhat_upper"]].copy()
-    result["yhat"] = result["yhat"].clip(lower=0).round(1)
-    result["yhat_lower"] = result["yhat_lower"].clip(lower=0).round(1)
-    result["yhat_upper"] = result["yhat_upper"].clip(lower=0).round(1)
+    # Build result with confidence intervals (approx +/- 1.28 * residual std = 80% CI)
+    residuals = model.resid
+    std = residuals.std()
 
-    # Mark historical vs forecast
-    last_date = prophet_df["ds"].max()
-    result["is_forecast"] = result["ds"] > last_date
+    # Historical fitted values
+    hist = pd.DataFrame({
+        "ds": y.index,
+        "yhat": model.fittedvalues.clip(lower=0).round(1),
+        "yhat_lower": (model.fittedvalues - 1.28 * std).clip(lower=0).round(1),
+        "yhat_upper": (model.fittedvalues + 1.28 * std).clip(lower=0).round(1),
+        "is_forecast": False,
+    })
 
+    # Future predictions
+    future = pd.DataFrame({
+        "ds": pred.index,
+        "yhat": pred.clip(lower=0).round(1),
+        "yhat_lower": (pred - 1.28 * std).clip(lower=0).round(1),
+        "yhat_upper": (pred + 1.28 * std).clip(lower=0).round(1),
+        "is_forecast": True,
+    })
+
+    result = pd.concat([hist, future], ignore_index=True)
     return result
 
 
 def backtest(df: pd.DataFrame, test_months: int = 6) -> dict:
-    """Backtest Prophet model: train on all but last N months, evaluate on held-out."""
-    from prophet import Prophet
+    """Backtest model: train on all but last N months, evaluate on held-out."""
+    ts_df = prepare_ts_data(df)
 
-    prophet_df = prepare_prophet_data(df)
-
-    if len(prophet_df) <= test_months:
+    if len(ts_df) <= test_months:
         return {"mae": None, "mape": None, "message": "Not enough data for backtesting"}
 
-    train = prophet_df.iloc[:-test_months]
-    test = prophet_df.iloc[-test_months:]
+    y = ts_df.set_index("ds")["y"].asfreq("MS").fillna(0)
 
-    model = Prophet(
-        yearly_seasonality=True,
-        weekly_seasonality=False,
-        daily_seasonality=False,
-        seasonality_mode="multiplicative",
-        changepoint_prior_scale=0.1,
-    )
-    model.fit(train)
+    train = y.iloc[:-test_months]
+    test = y.iloc[-test_months:]
 
-    future = model.make_future_dataframe(periods=test_months, freq="MS")
-    prediction = model.predict(future)
+    model = ExponentialSmoothing(
+        train,
+        trend="add",
+        seasonal="mul",
+        seasonal_periods=12,
+        initialization_method="estimated",
+    ).fit(optimized=True)
 
-    # Get predictions for test period
-    pred_test = prediction[prediction["ds"].isin(test["ds"])]
-    merged = test.merge(pred_test[["ds", "yhat"]], on="ds")
+    pred = model.forecast(test_months)
 
-    mae = np.abs(merged["y"] - merged["yhat"]).mean()
-    mape = (np.abs(merged["y"] - merged["yhat"]) / merged["y"].clip(lower=1)).mean() * 100
+    mae = np.abs(test.values - pred.values).mean()
+    mape = (np.abs(test.values - pred.values) / np.clip(test.values, 1, None)).mean() * 100
 
     return {
         "mae": round(float(mae), 2),
         "mape": round(float(mape), 1),
         "test_months": test_months,
-        "actual": merged["y"].tolist(),
-        "predicted": merged["yhat"].round(1).tolist(),
-        "dates": [d.strftime("%Y-%m") for d in merged["ds"]],
+        "actual": test.values.tolist(),
+        "predicted": pred.round(1).values.tolist(),
+        "dates": [d.strftime("%Y-%m") for d in test.index],
     }
