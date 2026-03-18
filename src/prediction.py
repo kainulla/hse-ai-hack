@@ -26,17 +26,32 @@ def forecast(df: pd.DataFrame, horizon_months: int = 12) -> pd.DataFrame:
     """Run Holt-Winters forecast on incident data.
 
     Returns DataFrame with ds, yhat, yhat_lower, yhat_upper.
+    Adapts model complexity based on available data length.
     """
     ts_df = prepare_ts_data(df)
 
     y = ts_df.set_index("ds")["y"].asfreq("MS").fillna(0)
 
-    # Holt-Winters with additive trend and multiplicative seasonality
+    # Adapt model to data length: need >= 2 full seasonal cycles (24 months) for seasonal
+    n_months = len(y)
+    if n_months >= 24:
+        seasonal = "mul"
+        seasonal_periods = 12
+        trend = "add"
+    elif n_months >= 6:
+        seasonal = None
+        seasonal_periods = None
+        trend = "add"
+    else:
+        seasonal = None
+        seasonal_periods = None
+        trend = None
+
     model = ExponentialSmoothing(
         y,
-        trend="add",
-        seasonal="mul",
-        seasonal_periods=12,
+        trend=trend,
+        seasonal=seasonal,
+        seasonal_periods=seasonal_periods,
         initialization_method="estimated",
     ).fit(optimized=True)
 
@@ -81,11 +96,26 @@ def backtest(df: pd.DataFrame, test_months: int = 6) -> dict:
     train = y.iloc[:-test_months]
     test = y.iloc[-test_months:]
 
+    # Adapt model to training data length
+    n_train = len(train)
+    if n_train >= 24:
+        seasonal = "mul"
+        seasonal_periods = 12
+        trend = "add"
+    elif n_train >= 6:
+        seasonal = None
+        seasonal_periods = None
+        trend = "add"
+    else:
+        seasonal = None
+        seasonal_periods = None
+        trend = None
+
     model = ExponentialSmoothing(
         train,
-        trend="add",
-        seasonal="mul",
-        seasonal_periods=12,
+        trend=trend,
+        seasonal=seasonal,
+        seasonal_periods=seasonal_periods,
         initialization_method="estimated",
     ).fit(optimized=True)
 

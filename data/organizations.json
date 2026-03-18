@@ -1,50 +1,386 @@
 [
   {
-    "id": "org_01",
-    "name": "ТОО «КазМунайСервис»",
+    "id": "org_001",
+    "name": "ТОО \"Алтын Раушан\"",
     "type": "contractor",
-    "risk_base": 0.7
+    "risk_base": 0.5
   },
   {
-    "id": "org_02",
-    "name": "АО «ПетроКазахстан»",
-    "type": "operator",
-    "risk_base": 0.4
-  },
-  {
-    "id": "org_03",
-    "name": "ТОО «ДриллТех»",
+    "id": "org_002",
+    "name": "ТОО \"Гүл Әлемі\"",
     "type": "contractor",
-    "risk_base": 0.65
+    "risk_base": 0.5
   },
   {
-    "id": "org_04",
-    "name": "ТОО «СтройМонтажСервис»",
+    "id": "org_003",
+    "name": "ТОО \"Лазурная Лилия\"",
     "type": "contractor",
-    "risk_base": 0.8
+    "risk_base": 0.5
   },
   {
-    "id": "org_05",
-    "name": "АО «ТенгизШеврОйл»",
-    "type": "operator",
-    "risk_base": 0.35
-  },
-  {
-    "id": "org_06",
-    "name": "ТОО «КаспийЭнерджи»",
+    "id": "org_004",
+    "name": "ТОО \"Сакура KZ\"",
     "type": "contractor",
-    "risk_base": 0.6
+    "risk_base": 0.5
   },
   {
-    "id": "org_07",
-    "name": "АО «СНПС-Актобемунайгаз»",
-    "type": "operator",
-    "risk_base": 0.45
-  },
-  {
-    "id": "org_08",
-    "name": "ТОО «НефтеСпецМонтаж»",
+    "id": "org_005",
+    "name": "ТОО \"Розовый Рассвет\"",
     "type": "contractor",
-    "risk_base": 0.75
+    "risk_base": 0.5
+  },
+  {
+    "id": "org_006",
+    "name": "ТОО \"Тюльпан Премиум\"",
+    "type": "contractor",
+    "risk_base": 0.5
+  },
+  {
+    "id": "org_007",
+    "name": "ТОО \"Орхидея Астана\"",
+    "type": "contractor",
+    "risk_base": 0.5
+  },
+  {
+    "id": "org_008",
+    "name": "ТОО \"Нежный Пион\"",
+    "type": "contractor",
+    "risk_base": 0.5
+  },
+  {
+    "id": "org_009",
+    "name": "ТОО \"Гүлстан Флора\"",
+    "type": "contractor",
+    "risk_base": 0.5
+  },
+  {
+    "id": "org_010",
+    "name": "ТОО \"Ирис Group\"",
+    "type": "contractor",
+    "risk_base": 0.5
+  },
+  {
+    "id": "org_011",
+    "name": "ТОО \"Белая Магнолия\"",
+    "type": "contractor",
+    "risk_base": 0.5
+  },
+  {
+    "id": "org_012",
+    "name": "ТОО \"Floraison KZ\"",
+    "type": "contractor",
+    "risk_base": 0.5
+  },
+  {
+    "id": "org_013",
+    "name": "ТОО \"Гүлдер Маркет\"",
+    "type": "contractor",
+    "risk_base": 0.5
+  },
+  {
+    "id": "org_014",
+    "name": "ТОО \"Лавандовый Сад\"",
+    "type": "contractor",
+    "risk_base": 0.5
+  },
+  {
+    "id": "org_015",
+    "name": "ТОО \"Sunflower Company\"",
+    "type": "contractor",
+    "risk_base": 0.5
+  },
+  {
+    "id": "org_016",
+    "name": "ТОО \"Жасмин Люкс\"",
+    "type": "contractor",
+    "risk_base": 0.5
+  },
+  {
+    "id": "org_017",
+    "name": "ТОО \"Весенний Букет\"",
+    "type": "contractor",
+    "risk_base": 0.5
+  },
+  {
+    "id": "org_018",
+    "name": "ТОО \"Camellia Trade\"",
+    "type": "contractor",
+    "risk_base": 0.5
+  },
+  {
+    "id": "org_019",
+    "name": "ТОО \"Гүл Шабыт\"",
+    "type": "contractor",
+    "risk_base": 0.5
+  },
+  {
+    "id": "org_020",
+    "name": "ТОО \"Роза Ветров KZ\"",
+    "type": "contractor",
+    "risk_base": 0.5
+  },
+  {
+    "id": "org_021",
+    "name": "ТОО \"Весенний Букет\" Управление производственно-технического обслуживания и комплектации оборудованием",
+    "type": "contractor",
+    "risk_base": 0.5
+  },
+  {
+    "id": "org_022",
+    "name": "ТОО \"Алма Гүл\"",
+    "type": "contractor",
+    "risk_base": 0.5
+  },
+  {
+    "id": "org_023",
+    "name": "ТОО \"Цветочный Караван\"",
+    "type": "contractor",
+    "risk_base": 0.5
+  },
+  {
+    "id": "org_024",
+    "name": "Неизвестная организация",
+    "type": "contractor",
+    "risk_base": 0.5
+  },
+  {
+    "id": "org_025",
+    "name": "ТОО \"Daisy Partners\"",
+    "type": "contractor",
+    "risk_base": 0.5
+  },
+  {
+    "id": "org_026",
+    "name": "ТОО \"Гүл Нұры\"",
+    "type": "contractor",
+    "risk_base": 0.5
+  },
+  {
+    "id": "org_027",
+    "name": "ТОО \"Полевой Василёк\"",
+    "type": "contractor",
+    "risk_base": 0.5
+  },
+  {
+    "id": "org_028",
+    "name": "ТОО \"Flora Capital\"",
+    "type": "contractor",
+    "risk_base": 0.5
+  },
+  {
+    "id": "org_029",
+    "name": "ТОО \"Имперская Орхидея\"",
+    "type": "contractor",
+    "risk_base": 0.5
+  },
+  {
+    "id": "org_030",
+    "name": "ТОО \"Весенний Крокус\"",
+    "type": "contractor",
+    "risk_base": 0.5
+  },
+  {
+    "id": "org_031",
+    "name": "ТОО \"Изумрудный Папоротник\"",
+    "type": "contractor",
+    "risk_base": 0.5
+  },
+  {
+    "id": "org_032",
+    "name": "ТОО \"Белоснежная Азалия\"",
+    "type": "contractor",
+    "risk_base": 0.5
+  },
+  {
+    "id": "org_033",
+    "name": "ТОО \"Алтын Бәйшешек\"",
+    "type": "contractor",
+    "risk_base": 0.5
+  },
+  {
+    "id": "org_034",
+    "name": "ТОО \"Көктем Гүлі\"",
+    "type": "contractor",
+    "risk_base": 0.5
+  },
+  {
+    "id": "org_035",
+    "name": "ТОО \"Жемчужная Фрезия\"",
+    "type": "contractor",
+    "risk_base": 0.5
+  },
+  {
+    "id": "org_036",
+    "name": "ТОО \"Лазурный Дельфиниум\"",
+    "type": "contractor",
+    "risk_base": 0.5
+  },
+  {
+    "id": "org_037",
+    "name": "ТОО \"Розовый Флокс\"",
+    "type": "contractor",
+    "risk_base": 0.5
+  },
+  {
+    "id": "org_038",
+    "name": "ТОО \"Сафлоровый Рассвет\"",
+    "type": "contractor",
+    "risk_base": 0.5
+  },
+  {
+    "id": "org_039",
+    "name": "ТОО \"Медовая Астра\"",
+    "type": "contractor",
+    "risk_base": 0.5
+  },
+  {
+    "id": "org_040",
+    "name": "ТОО \"Тайный Бутон\"",
+    "type": "contractor",
+    "risk_base": 0.5
+  },
+  {
+    "id": "org_041",
+    "name": "ТОО \"Цветущий Миндаль\"",
+    "type": "contractor",
+    "risk_base": 0.5
+  },
+  {
+    "id": "org_042",
+    "name": "ТОО \"Полевой Клевер\"",
+    "type": "contractor",
+    "risk_base": 0.5
+  },
+  {
+    "id": "org_043",
+    "name": "ТОО \"Огненная Георгина\"",
+    "type": "contractor",
+    "risk_base": 0.5
+  },
+  {
+    "id": "org_044",
+    "name": "ТОО \"Сияющая Примула\"",
+    "type": "contractor",
+    "risk_base": 0.5
+  },
+  {
+    "id": "org_045",
+    "name": "ТОО \"Гармония Лилий\"",
+    "type": "contractor",
+    "risk_base": 0.5
+  },
+  {
+    "id": "org_046",
+    "name": "ТОО \"Шёлковый Пион\"",
+    "type": "contractor",
+    "risk_base": 0.5
+  },
+  {
+    "id": "org_047",
+    "name": "ТОО \"Японская Сакура\"",
+    "type": "contractor",
+    "risk_base": 0.5
+  },
+  {
+    "id": "org_048",
+    "name": "ТОО \"Лунная Орхидея\"",
+    "type": "contractor",
+    "risk_base": 0.5
+  },
+  {
+    "id": "org_049",
+    "name": "ТОО \"Садовый Гиацинт\"",
+    "type": "contractor",
+    "risk_base": 0.5
+  },
+  {
+    "id": "org_050",
+    "name": "ТОО \"Белый Лотос KZ\"",
+    "type": "contractor",
+    "risk_base": 0.5
+  },
+  {
+    "id": "org_051",
+    "name": "ТОО \"Ароматный Мирт\"",
+    "type": "contractor",
+    "risk_base": 0.5
+  },
+  {
+    "id": "org_052",
+    "name": "ТОО \"Цветочный Бриз\"",
+    "type": "contractor",
+    "risk_base": 0.5
+  },
+  {
+    "id": "org_053",
+    "name": "ТОО \"Небесная Камелия\"",
+    "type": "contractor",
+    "risk_base": 0.5
+  },
+  {
+    "id": "org_054",
+    "name": "ТОО \"Степной Шалфей\"",
+    "type": "contractor",
+    "risk_base": 0.5
+  },
+  {
+    "id": "org_055",
+    "name": "ТОО \"Грация Гортензии\"",
+    "type": "contractor",
+    "risk_base": 0.5
+  },
+  {
+    "id": "org_056",
+    "name": "ТОО \"Пудровая Роза\"",
+    "type": "contractor",
+    "risk_base": 0.5
+  },
+  {
+    "id": "org_057",
+    "name": "ТОО \"Золотой Подсолнух\"",
+    "type": "contractor",
+    "risk_base": 0.5
+  },
+  {
+    "id": "org_058",
+    "name": "ТОО \"Кристальный Ирис\"",
+    "type": "contractor",
+    "risk_base": 0.5
+  },
+  {
+    "id": "org_059",
+    "name": "ТОО \"Лепесток Удачи\"",
+    "type": "contractor",
+    "risk_base": 0.5
+  },
+  {
+    "id": "org_060",
+    "name": "ТОО \"Рассветная Лаванда\"",
+    "type": "contractor",
+    "risk_base": 0.5
+  },
+  {
+    "id": "org_061",
+    "name": "ТОО \"Цветущий Олеандр\"",
+    "type": "contractor",
+    "risk_base": 0.5
+  },
+  {
+    "id": "org_062",
+    "name": "ТОО \"Весенний Букет\"",
+    "type": "contractor",
+    "risk_base": 0.5
+  },
+  {
+    "id": "org_063",
+    "name": "ТОО \"Флора Капитал\"",
+    "type": "contractor",
+    "risk_base": 0.5
+  },
+  {
+    "id": "org_064",
+    "name": "ТОО \"Бархатный Тюльпан\"",
+    "type": "contractor",
+    "risk_base": 0.5
   }
 ]

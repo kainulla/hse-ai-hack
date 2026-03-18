@@ -49,8 +49,8 @@ selected_org_name = st.sidebar.selectbox("Организация", list(org_opti
 selected_org = org_options[selected_org_name]
 
 date_col1, date_col2 = st.sidebar.columns(2)
-date_from = date_col1.date_input("С", value=pd.Timestamp("2023-01-01"))
-date_to = date_col2.date_input("По", value=pd.Timestamp("2025-12-31"))
+date_from = date_col1.date_input("С", value=pd.Timestamp("2024-01-01"))
+date_to = date_col2.date_input("По", value=pd.Timestamp("2026-12-31"))
 
 selected_type = st.sidebar.selectbox(
     "Тип происшествия",

@@ -1,5 +1,7 @@
 """ROI and savings calculator based on PRD 8.1/8.2."""
 
+import pandas as pd
+
 from src.config import COST_MODEL, REDUCTION_RATES
 from src.database import load_incidents
 
@@ -10,15 +12,23 @@ def compute_economics() -> dict:
     Returns before/after comparison with savings breakdown.
     """
     incidents = load_incidents()
-    incidents_per_year = len(incidents) / 3  # 3 years of data
 
     # Count by type (annualized)
     type_counts = incidents["type"].value_counts()
-    annual_lti = type_counts.get("lti", 0) / 3
-    annual_microtrauma = type_counts.get("microtrauma", 0) / 3
-    annual_near_miss = type_counts.get("near_miss", 0) / 3
-    annual_first_aid = type_counts.get("first_aid", 0) / 3
-    annual_fire = type_counts.get("fire", 0) / 3
+
+    # Determine data span in years for annualization
+    incidents_copy = incidents.copy()
+    incidents_copy["date"] = pd.to_datetime(incidents_copy["date"])
+    date_range_days = (incidents_copy["date"].max() - incidents_copy["date"].min()).days
+    years_span = max(date_range_days / 365.25, 1.0)
+    incidents_per_year = len(incidents) / years_span
+
+    # Combine related types for economic calculation
+    annual_lti = (type_counts.get("lti", 0) + type_counts.get("nlti", 0)) / years_span
+    annual_microtrauma = (type_counts.get("micro_trauma", 0) + type_counts.get("microtrauma", 0)) / years_span
+    annual_near_miss = (type_counts.get("near_miss", 0) + type_counts.get("dangerous_situation", 0)) / years_span
+    annual_first_aid = (type_counts.get("first_aid", 0) + type_counts.get("health_deterioration", 0)) / years_span
+    annual_fire = (type_counts.get("fire", 0) + type_counts.get("dtp", 0) + type_counts.get("incident", 0)) / years_span
 
     # Before AI
     before = {

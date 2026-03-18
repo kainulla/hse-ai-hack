@@ -58,7 +58,7 @@ def compute_risk_score(org_id: str) -> dict:
     if len(korgau) > 0:
         violations = korgau[korgau["obs_type"] == "unsafe_condition"]
         if len(violations) > 0:
-            overdue_count = len(violations[violations["status"] == "overdue"])
+            overdue_count = len(violations[violations["status"].isin(["overdue", "open"])])
             overdue_ratio = overdue_count / len(violations)
 
     # Average severity
